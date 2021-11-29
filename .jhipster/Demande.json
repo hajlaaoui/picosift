@@ -1,0 +1,96 @@
+{
+  "name": "Demande",
+  "fields": [
+    {
+      "fieldName": "refSiteWeb",
+      "fieldType": "String",
+      "javadoc": "The firstname attribute.",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "datedesicion",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "importateur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "refBF",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "marque",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "modele",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "numeroSerie",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "imei1",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "imei2",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "imei3",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "Statut",
+      "fieldValues": "EN_COURS,ACCEPTER,REFUSER"
+    },
+    {
+      "fieldName": "dateCreation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateDepotSiteWeb",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateValidation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "dateExport",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "commentaire",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "many-to-one",
+      "otherEntityName": "dossier",
+      "otherEntityRelationshipName": "demande",
+      "relationshipName": "dossier"
+    }
+  ],
+  "entityTableName": "demande",
+  "dto": "no",
+  "pagination": "no",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210811113829"
+}

@@ -1,0 +1,68 @@
+{
+  "name": "Dossier",
+  "fields": [
+    {
+      "fieldName": "refBF",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "datedesicion",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "cin",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "passeport",
+      "fieldType": "String",
+      "fieldValidateRules": ["unique"]
+    },
+    {
+      "fieldName": "importateur",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "marque",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "statut",
+      "fieldType": "Statut",
+      "fieldValues": "EN_COURS,ACCEPTER,REFUSER"
+    },
+    {
+      "fieldName": "numAvisArrive",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "dateValidation",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "commentaire",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "relationships": [
+    {
+      "relationshipType": "one-to-many",
+      "otherEntityName": "demande",
+      "otherEntityRelationshipName": "dossier",
+      "relationshipName": "demande"
+    }
+  ],
+  "entityTableName": "dossier",
+  "dto": "no",
+  "pagination": "pagination",
+  "service": "serviceImpl",
+  "jpaMetamodelFiltering": false,
+  "fluentMethods": true,
+  "readOnly": false,
+  "embedded": false,
+  "applications": "*",
+  "changelogDate": "20210811113828"
+}

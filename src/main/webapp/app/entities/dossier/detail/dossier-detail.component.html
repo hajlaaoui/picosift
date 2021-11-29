@@ -1,0 +1,68 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="dossier">
+      <h2 data-cy="dossierDetailsHeading"><span>Dossier</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ dossier.id }}</span>
+        </dd>
+        <dt><span>Ref BF</span></dt>
+        <dd>
+          <span>{{ dossier.refBF }}</span>
+        </dd>
+        <dt><span>Datedesicion</span></dt>
+        <dd>
+          <span>{{ dossier.datedesicion | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Cin</span></dt>
+        <dd>
+          <span>{{ dossier.cin }}</span>
+        </dd>
+        <dt><span>Passeport</span></dt>
+        <dd>
+          <span>{{ dossier.passeport }}</span>
+        </dd>
+        <dt><span>Importateur</span></dt>
+        <dd>
+          <span>{{ dossier.importateur }}</span>
+        </dd>
+        <dt><span>Marque</span></dt>
+        <dd>
+          <span>{{ dossier.marque }}</span>
+        </dd>
+        <dt><span>Statut</span></dt>
+        <dd>
+          <span>{{ dossier.statut }}</span>
+        </dd>
+        <dt><span>Num Avis Arrive</span></dt>
+        <dd>
+          <span>{{ dossier.numAvisArrive }}</span>
+        </dd>
+        <dt><span>Date Validation</span></dt>
+        <dd>
+          <span>{{ dossier.dateValidation | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Commentaire</span></dt>
+        <dd>
+          <span>{{ dossier.commentaire }}</span>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/dossier', dossier.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>

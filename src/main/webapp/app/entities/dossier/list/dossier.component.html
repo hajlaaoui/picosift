@@ -1,0 +1,137 @@
+<div>
+  <h2 id="page-heading" data-cy="DossierHeading">
+    <span>Dossiers</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info mr-2" (click)="loadPage()" [disabled]="isLoading">
+        <fa-icon icon="sync" [spin]="isLoading"></fa-icon>
+        <span>Refresh List</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-dossier"
+        [routerLink]="['/dossier/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span> Create a new Dossier </span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  <div class="alert alert-warning" id="no-result" *ngIf="dossiers?.length === 0">
+    <span>No dossiers found</span>
+  </div>
+
+  <div class="table-responsive" id="entities" *ngIf="dossiers && dossiers.length > 0">
+    <table class="table table-striped" aria-describedby="page-heading">
+      <thead>
+        <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+          <th scope="col" jhiSortBy="id"><span>ID</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="refBF"><span>Ref BF</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="datedesicion"><span>Datedesicion</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="cin"><span>Cin</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="passeport"><span>Passeport</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="importateur"><span>Importateur</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="marque"><span>Marque</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="statut"><span>Statut</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="numAvisArrive"><span>Num Avis Arrive</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="dateValidation"><span>Date Validation</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col" jhiSortBy="commentaire"><span>Commentaire</span> <fa-icon icon="sort"></fa-icon></th>
+          <th scope="col">rapport date</th>
+          <th scope="col"></th>
+          <th scope="col"> </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let dossier of dossiers; trackBy: trackId" data-cy="entityTable">
+          <td>
+            <a [routerLink]="['/dossier', dossier.id, 'view']">{{ dossier.id }}</a>
+          </td>
+          <td>{{ dossier.refBF }}</td>
+          <td>{{ dossier.datedesicion | formatMediumDate }}</td>
+          <td>{{ dossier.cin }}</td>
+          <td>{{ dossier.passeport }}</td>
+          <td>{{ dossier.importateur }}</td>
+          <td>{{ dossier.marque }}</td>
+          <td [ngClass]="{'text-success': dossier.statut == 'ACCEPTER' ,
+          'text-primary': dossier.statut == 'EN_COURS',
+          'text-danger': dossier.statut == 'REFUSER' }" >{{ dossier.statut }}</td>
+          <td>{{ dossier.numAvisArrive }}</td>
+          <td>{{ dossier.dateValidation | formatMediumDate }}</td>
+          <td>{{ dossier.commentaire }}</td>
+<td>ssssssssss</td>
+          <td class="text-right">
+            <div class="btn-group">
+              <button
+                type="submit"
+                [routerLink]="['/dossier', dossier.id, 'view']"
+                class="btn btn-info btn-sm"
+                data-cy="entityDetailsButton"
+              >
+                <fa-icon icon="eye"></fa-icon>
+                <span class="d-none d-md-inline">View</span>
+              </button>
+
+              <button
+              *jhiHasAnyAuthority="'ROLE_ADMIN'"
+                type="submit"
+                [routerLink]="['/dossier', dossier.id, 'edit']"
+                class="btn btn-primary btn-sm"
+                data-cy="entityEditButton"
+              >
+                <fa-icon icon="pencil-alt"></fa-icon>
+                <span class="d-none d-md-inline">Edit</span>
+              </button>
+
+              <button  *jhiHasAnyAuthority="'ROLE_ADMIN'" type="submit" (click)="delete(dossier)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Delete</span>
+              </button>
+            </div>
+          </td>
+
+
+          <td>
+            <div  *jhiHasAnyAuthority="'ROLE_ADMIN'" class="btn-group" >
+              <button (click)="accept(dossier)" *ngIf=" dossier.statut != 'ACCEPTER'" class="btn btn-info btn-sm" >
+
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Accepte</span>
+              </button>
+              <button  (click)="deny(dossier)" *ngIf=" dossier.statut != 'REFUSER'" class="btn btn-danger btn-sm" >
+                <fa-icon icon="times"></fa-icon>
+                <span class="d-none d-md-inline">Refuse</span>
+              </button>
+            </div>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="dossiers && dossiers.length > 0">
+    <div class="row justify-content-center">
+      <jhi-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></jhi-item-count>
+    </div>
+
+    <div class="row justify-content-center">
+      <ngb-pagination
+        [collectionSize]="totalItems"
+        [(page)]="ngbPaginationPage"
+        [pageSize]="itemsPerPage"
+        [maxSize]="5"
+        [rotate]="true"
+        [boundaryLinks]="true"
+        (pageChange)="loadPage($event)"
+      ></ngb-pagination>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="row justify-content-center">
+  <div class="col-8">
+    <div *ngIf="demande">
+      <h2 data-cy="demandeDetailsHeading"><span>Demande</span></h2>
+
+      <hr />
+
+      <jhi-alert-error></jhi-alert-error>
+
+      <jhi-alert></jhi-alert>
+
+      <dl class="row-md jh-entity-details">
+        <dt><span>ID</span></dt>
+        <dd>
+          <span>{{ demande.id }}</span>
+        </dd>
+        <dt><span ngbTooltip="The firstname attribute.">Ref Site Web</span></dt>
+        <dd>
+          <span>{{ demande.refSiteWeb }}</span>
+        </dd>
+        <dt><span>Datedesicion</span></dt>
+        <dd>
+          <span>{{ demande.datedesicion | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Importateur</span></dt>
+        <dd>
+          <span>{{ demande.importateur }}</span>
+        </dd>
+        <dt><span>Ref BF</span></dt>
+        <dd>
+          <span>{{ demande.refBF }}</span>
+        </dd>
+        <dt><span>Marque</span></dt>
+        <dd>
+          <span>{{ demande.marque }}</span>
+        </dd>
+        <dt><span>Modele</span></dt>
+        <dd>
+          <span>{{ demande.modele }}</span>
+        </dd>
+        <dt><span>Numero Serie</span></dt>
+        <dd>
+          <span>{{ demande.numeroSerie }}</span>
+        </dd>
+        <dt><span>Imei 1</span></dt>
+        <dd>
+          <span>{{ demande.imei1 }}</span>
+        </dd>
+        <dt><span>Imei 2</span></dt>
+        <dd>
+          <span>{{ demande.imei2 }}</span>
+        </dd>
+        <dt><span>Imei 3</span></dt>
+        <dd>
+          <span>{{ demande.imei3 }}</span>
+        </dd>
+        <dt><span>Statut</span></dt>
+        <dd>
+          <span>{{ demande.statut }}</span>
+        </dd>
+        <dt><span>Date Creation</span></dt>
+        <dd>
+          <span>{{ demande.dateCreation | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Date Depot Site Web</span></dt>
+        <dd>
+          <span>{{ demande.dateDepotSiteWeb | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Date Validation</span></dt>
+        <dd>
+          <span>{{ demande.dateValidation | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Date Export</span></dt>
+        <dd>
+          <span>{{ demande.dateExport | formatMediumDate }}</span>
+        </dd>
+        <dt><span>Commentaire</span></dt>
+        <dd>
+          <span>{{ demande.commentaire }}</span>
+        </dd>
+        <dt><span>Dossier</span></dt>
+        <dd>
+          <div *ngIf="demande.dossier">
+            <a [routerLink]="['/dossier', demande.dossier?.id, 'view']">{{ demande.dossier?.id }}</a>
+          </div>
+        </dd>
+      </dl>
+
+      <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+        <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span>Back</span>
+      </button>
+
+      <button  *jhiHasAnyAuthority="'ROLE_ADMIN'" type="button" [routerLink]="['/demande', demande.id, 'edit']" class="btn btn-primary">
+        <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span>Edit</span>
+      </button>
+    </div>
+  </div>
+</div>
